@@ -1,7 +1,7 @@
 ---
 name: sparki-video-editor
 description: AI video editor for creators. Transform raw footage into polished vlogs, talking-head videos, or social content (TikTok/Shorts/Reels) via natural-language prompts, style presets, or reference-style cloning. Use when the user mentions video editing, clipping, shorts, reels, TikTok, captions, montage, vlog, highlight reels, or video processing. All rendering runs on the cloud-hosted Sparki API — do NOT use ffmpeg or local video tools.
-version: 1.1.1
+version: 1.1.2
 ---
 
 # Sparki Video Editor
