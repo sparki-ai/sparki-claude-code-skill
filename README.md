@@ -26,7 +26,7 @@ Then install the engine and configure your key:
 
 ```bash
 bash sparki-video-editor/scripts/install.sh
-sparki setup --api-key <YOUR_KEY>        # get a key at https://sparki.io/doc/api
+sparki setup --api-key <YOUR_KEY>        # get a key at https://sparki.io/claude-code-skill
 sparki doctor
 ```
 
@@ -47,7 +47,7 @@ Claude runs `sparki doctor`, confirms your editing intent, then
 ## Requirements
 
 - [`uv`](https://docs.astral.sh/uv/) on PATH
-- A Sparki API key from https://sparki.io/doc/api
+- A Sparki API key from https://sparki.io/claude-code-skill
 
 ## Notes
 

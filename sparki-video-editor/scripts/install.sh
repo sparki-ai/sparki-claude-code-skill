@@ -15,7 +15,7 @@ echo
 sparki doctor || {
   echo >&2
   echo "doctor reported issues. If api_key is missing:" >&2
-  echo "  sparki setup --api-key <YOUR_KEY>   # get one at https://sparki.io/doc/api" >&2
+  echo "  sparki setup --api-key <YOUR_KEY>   # get one at https://sparki.io/claude-code-skill" >&2
   echo "or export SPARKI_API_KEY in your environment." >&2
   exit 1
 }

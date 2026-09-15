@@ -12,7 +12,7 @@
 - 仓库：**https://github.com/fischerlam/sparki-claude-code-skill**（PUBLIC）
 - 分支：`main` · 最新 commit：`410d3f7c6af035211a4b3c5f500d22d5089c9d47`
 - `claude plugin validate --strict` → ✔ 通过（审核流水线跑的是同一个校验）
-- plugin.json version `1.1.0`，与 SKILL.md 一致（版本不一致是最常见的拒绝原因，已避开）
+- plugin.json version `1.1.1`，与 SKILL.md 一致（版本不一致是最常见的拒绝原因，已避开）
 
 > ⚠️ 提交前若又推了新 commit，审核会 pin 到最新 SHA；确保推之后再校验一次。
 
@@ -53,7 +53,7 @@ Three ways to edit:
 • Style-clone — replicate a reference video's editing style
 
 All rendering runs on the cloud-hosted Sparki API — no ffmpeg, no local
-rendering. Requires a free API key from https://sparki.io/doc/api.
+rendering. Requires a free API key from https://sparki.io/claude-code-skill.
 ```
 
 ### 6. Example prompts（表单常会要 starter prompts）
@@ -66,7 +66,7 @@ rendering. Requires a free API key from https://sparki.io/doc/api.
 ### 7. Setup / prerequisites（如有此栏）
 ```
 1. Install the engine: uv tool install --upgrade sparki-cli  (requires uv)
-2. Get an API key at https://sparki.io/doc/api and run: sparki setup --api-key <KEY>
+2. Get an API key at https://sparki.io/claude-code-skill and run: sparki setup --api-key <KEY>
    (or export SPARKI_API_KEY)
 3. Run `sparki doctor` to confirm setup.
 ```
