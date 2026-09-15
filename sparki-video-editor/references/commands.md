@@ -66,7 +66,7 @@ Style-clone (shorter): `INIT → EXECUTOR → COMPLETED / FAILED / CANCEL`
 
 | Code | Action |
 |---|---|
-| `AUTH_FAILED` | Invalid key → get a new one at https://sparki.io/doc/api, `sparki setup --api-key <key>` |
+| `AUTH_FAILED` | Invalid key → get a new one at https://sparki.io/claude-code-skill, `sparki setup --api-key <key>` |
 | `QUOTA_EXCEEDED` | Out of credits → top up at https://sparki.io/ |
 | `STORAGE_FULL` | `sparki assets list` then `sparki assets delete ...`, retry |
 | `FILE_TOO_LARGE` | File > 3GB → compress/trim |

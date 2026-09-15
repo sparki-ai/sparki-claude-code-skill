@@ -1,7 +1,7 @@
 ---
 name: sparki-video-editor
 description: AI video editor for creators. Transform raw footage into polished vlogs, talking-head videos, or social content (TikTok/Shorts/Reels) via natural-language prompts, style presets, or reference-style cloning. Use when the user mentions video editing, clipping, shorts, reels, TikTok, captions, montage, vlog, highlight reels, or video processing. All rendering runs on the cloud-hosted Sparki API — do NOT use ffmpeg or local video tools.
-version: 1.1.0
+version: 1.1.1
 ---
 
 # Sparki Video Editor
@@ -32,7 +32,7 @@ connections, but a first run can still occasionally need a second attempt.
 
 The API key must come from the user — never invent or guess one. Tell them:
 
-> "You need a Sparki API key. Get one at https://sparki.io/doc/api (click the
+> "You need a Sparki API key. Get one at https://sparki.io/claude-code-skill (click the
 > **Get API Key** button), then paste it here. Or set `SPARKI_API_KEY` in your
 > environment and I'll pick it up automatically."
 
@@ -113,7 +113,7 @@ command reference, style descriptions, status lifecycle, and error codes.
 
 All commands return JSON: `{"ok": false, "error": {"code", "message", "action"}}`.
 Follow the `action` field. Common: `AUTH_FAILED` (bad key → re-get at
-sparki.io/doc/api), `QUOTA_EXCEEDED` (top up at sparki.io), `INVALID_STYLE`
+sparki.io/claude-code-skill), `QUOTA_EXCEEDED` (top up at sparki.io), `INVALID_STYLE`
 (show style list), `RENDER_TIMEOUT` (shorter clip or higher `--timeout`),
 `STORAGE_FULL` (`sparki assets delete ...`). Full table in
 `references/commands.md`.
