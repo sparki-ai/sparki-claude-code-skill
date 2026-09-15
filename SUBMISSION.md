@@ -10,9 +10,9 @@
 ## 提交前状态确认（已全部就绪 ✅）
 
 - 仓库：**https://github.com/fischerlam/sparki-claude-code-skill**（PUBLIC）
-- 分支：`main` · 最新 commit：`410d3f7c6af035211a4b3c5f500d22d5089c9d47`
-- `claude plugin validate --strict` → ✔ 通过（审核流水线跑的是同一个校验）
-- plugin.json version `1.1.1`，与 SKILL.md 一致（版本不一致是最常见的拒绝原因，已避开）
+- 分支：`main` · 提交前以远端最新 commit 为准
+- `claude plugin validate` → ✔ 通过（审核流水线跑的是同一个校验）
+- plugin.json version `1.1.2`，与 SKILL.md 一致（版本不一致是最常见的拒绝原因，已避开）
 
 > ⚠️ 提交前若又推了新 commit，审核会 pin 到最新 SHA；确保推之后再校验一次。
 
