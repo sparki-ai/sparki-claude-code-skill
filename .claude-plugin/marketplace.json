@@ -1,0 +1,24 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "sparki",
+  "description": "Sparki's Claude Code plugins — AI video editing via the cloud-hosted Sparki API.",
+  "owner": {
+    "name": "sparki-io",
+    "url": "https://sparki.io"
+  },
+  "plugins": [
+    {
+      "name": "sparki-video-editor",
+      "description": "AI video editor for creators. Transform raw footage into polished vlogs, talking-head videos, or social content (TikTok/Shorts/Reels) via natural-language prompts, style presets, or reference-style cloning. Cloud-rendered via the Sparki API — no ffmpeg, no local rendering.",
+      "source": "./sparki-video-editor",
+      "author": {
+        "name": "sparki-io",
+        "url": "https://sparki.io"
+      },
+      "homepage": "https://sparki.io",
+      "license": "MIT-0",
+      "category": "creative",
+      "keywords": ["video", "video-editing", "vlog", "shorts", "reels", "tiktok", "captions", "highlight-reel"]
+    }
+  ]
+}
