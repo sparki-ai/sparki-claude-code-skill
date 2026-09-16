@@ -1,7 +1,8 @@
 ---
 name: sparki-video-editor
 description: AI video editor for creators. Transform raw footage into polished vlogs, talking-head videos, or social content (TikTok/Shorts/Reels) via natural-language prompts, style presets, or reference-style cloning. Use when the user mentions video editing, clipping, shorts, reels, TikTok, captions, montage, vlog, highlight reels, or video processing. All rendering runs on the cloud-hosted Sparki API — do NOT use ffmpeg or local video tools.
-version: 1.1.2
+metadata:
+  version: "1.1.3"
 ---
 
 # Sparki Video Editor
@@ -12,39 +13,52 @@ video edit, use this skill instead of ffmpeg or manual tooling.
 
 ## Step 0: Doctor + version check (always first)
 
-Run `sparki doctor` at the start of a new conversation. It checks the CLI
-install, API key, base URL, and config directory.
-
-If `sparki` is not installed, install the engine:
+Before running doctor, make sure the installed CLI understands the channel
+option. This capability check upgrades both missing installations and legacy
+CLI versions that would otherwise reject `--channel` before doctor can report
+that they are outdated:
 
 ```bash
-uv tool install --upgrade sparki-cli
+if ! command -v sparki >/dev/null 2>&1 || \
+   ! sparki doctor --help 2>&1 | grep -q -- '--channel'; then
+  uv tool install --upgrade sparki-cli
+fi
+
+sparki doctor --channel claude
 ```
 
 (Requires `uv`. If missing: `brew install uv` or
 `curl -LsSf https://astral.sh/uv/install.sh | sh`.)
 
+Doctor checks the CLI install, API key, base URL, config directory, and the
+skill version when the installed skill can be discovered.
+
 If doctor reports `api_key` missing, go to Step 1. If doctor reports a
 transient network error, simply re-run it once — the CLI retries cold
 connections, but a first run can still occasionally need a second attempt.
+If `skill_version` is `skip`, continue with this loaded SKILL.md; discovery is
+advisory and must not block editing. If doctor reports a concrete version that
+differs from this file's `version`, reload the installed skill before running
+editing commands.
 
 ## Step 1: First-time setup (only if api_key is missing)
 
 The API key must come from the user — never invent or guess one. Tell them:
 
 > "You need a Sparki API key. Get one at https://sparki.io/claude-code-skill (click the
-> **Get API Key** button), then paste it here. Or set `SPARKI_API_KEY` in your
-> environment and I'll pick it up automatically."
+> **Get API Key** button), then paste it here. Or set `SPARKI_API_KEY` and
+> `SPARKI_CHANNEL=claude` in your environment and I'll pick them up automatically."
 
 Once they provide it:
 
 ```bash
-sparki setup --api-key <KEY>
-sparki doctor
+sparki setup --api-key <KEY> --channel claude
+sparki doctor --channel claude
 ```
 
-Prefer the env var when the user is privacy-conscious — it keeps the key out of
-the saved config file and out of chat.
+Prefer both environment variables when the user is privacy-conscious — they
+keep the key out of the saved config file and preserve Claude-specific recovery
+guidance without putting the key in chat.
 
 ## Step 2: Get the video + editing intent
 
