@@ -12,12 +12,9 @@ echo "Installing / upgrading sparki-cli..."
 uv tool install --upgrade sparki-cli
 
 echo
-sparki doctor || {
-  echo >&2
-  echo "doctor reported issues. If api_key is missing:" >&2
-  echo "  sparki setup --api-key <YOUR_KEY>   # get one at https://sparki.io/claude-code-skill" >&2
-  echo "or export SPARKI_API_KEY in your environment." >&2
-  exit 1
-}
+echo "Verifying the CLI executable..."
+sparki --help >/dev/null
 echo
-echo "sparki-cli ready. 🎬"
+echo "sparki-cli installed. Configure an API key, then verify the connection:"
+echo "  sparki setup --api-key <YOUR_KEY> --channel claude"
+echo "  sparki doctor --channel claude"

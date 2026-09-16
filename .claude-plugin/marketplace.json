@@ -1,7 +1,8 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "sparki",
-  "description": "Sparki's Claude Code plugins — AI video editing via the cloud-hosted Sparki API.",
+  "metadata": {
+    "description": "Sparki's Claude Code skills for cloud-hosted AI video editing."
+  },
   "owner": {
     "name": "sparki-io",
     "url": "https://sparki.io"

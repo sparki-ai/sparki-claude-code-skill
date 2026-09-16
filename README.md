@@ -10,7 +10,7 @@ via `sparki-cli` — no ffmpeg, no local rendering.
 sparki-video-editor/
 ├── SKILL.md                    # instructions + metadata (loaded on demand)
 ├── scripts/
-│   └── install.sh              # uv tool install --upgrade sparki-cli + doctor
+│   └── install.sh              # install the CLI and verify its executable
 └── references/
     └── commands.md             # full command / style / error reference
 ```
@@ -26,11 +26,12 @@ Then install the engine and configure your key:
 
 ```bash
 bash sparki-video-editor/scripts/install.sh
-sparki setup --api-key <YOUR_KEY>        # get a key at https://sparki.io/claude-code-skill
-sparki doctor
+sparki setup --api-key <YOUR_KEY> --channel claude  # get a key at https://sparki.io/claude-code-skill
+sparki doctor --channel claude
 ```
 
-(Or set `SPARKI_API_KEY` in your environment instead of `sparki setup`.)
+(Or set both `SPARKI_API_KEY` and `SPARKI_CHANNEL=claude` in your environment
+instead of running `sparki setup`.)
 
 ## Usage
 
@@ -41,7 +42,7 @@ Just ask Claude to edit a video — the skill triggers on mentions of vlog / cli
 > Edit ./raw/trip.mp4 into a vertical travel highlight reel
 ```
 
-Claude runs `sparki doctor`, confirms your editing intent, then
+Claude runs `sparki doctor --channel claude`, confirms your editing intent, then
 `sparki run ... --output ./sparki-output/result.mp4`.
 
 ## Requirements
