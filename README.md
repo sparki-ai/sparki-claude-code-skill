@@ -15,14 +15,31 @@ sparki-video-editor/
     └── commands.md             # full command / style / error reference
 ```
 
+## Supported surfaces
+
+This repository is a Claude Code plugin for desktop and terminal environments.
+It is not an installable Claude.ai browser integration. A browser-only Claude
+surface requires a separately published remote integration, such as MCP.
+
 ## Install
 
-Copy the `sparki-video-editor/` directory into your Claude Code skills folder:
+Install the plugin from Claude Code:
+
+```bash
+claude plugin marketplace add https://github.com/sparki-ai/sparki-claude-code-skill.git
+claude plugin install sparki-video-editor@sparki
+claude plugin list
+```
+
+If the installed plugin is not active in the current session, run
+`/reload-plugins --force` or restart Claude Code. Manual skill installation is
+also supported by copying `sparki-video-editor/` into:
 
 - Personal (all projects): `~/.claude/skills/`
 - Project-scoped (checked in for your team): `.claude/skills/`
 
-Then install the engine and check whether it is already configured:
+The bundled skill installs the engine and checks whether it is already
+configured when first used:
 
 ```bash
 bash sparki-video-editor/scripts/install.sh
