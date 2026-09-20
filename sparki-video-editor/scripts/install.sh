@@ -3,8 +3,8 @@
 set -euo pipefail
 
 if ! command -v uv >/dev/null 2>&1; then
-  echo "error: 'uv' is required. Install with 'brew install uv' or" >&2
-  echo "  curl -LsSf https://astral.sh/uv/install.sh | sh" >&2
+  echo "error: 'uv' is required. Install it with a trusted package manager or" >&2
+  echo "  follow https://docs.astral.sh/uv/getting-started/installation/" >&2
   exit 1
 fi
 
@@ -13,8 +13,14 @@ uv tool install --upgrade sparki-cli
 
 echo
 echo "Verifying the CLI executable..."
-sparki --help >/dev/null
+if command -v sparki >/dev/null 2>&1; then
+  sparki_command=(sparki)
+else
+  sparki_command=(uv tool run --from sparki-cli sparki)
+fi
+"${sparki_command[@]}" --help >/dev/null
 echo
-echo "sparki-cli installed. Configure an API key, then verify the connection:"
-echo "  sparki setup --api-key <YOUR_KEY> --channel claude"
-echo "  sparki doctor --channel claude"
+echo "sparki-cli installed. Check configuration before starting browser login:"
+printf '  %s config-status --channel claude\n' "${sparki_command[*]}"
+printf '  %s login --channel claude       # only when configured is false\n' "${sparki_command[*]}"
+printf '  %s doctor --channel claude\n' "${sparki_command[*]}"
