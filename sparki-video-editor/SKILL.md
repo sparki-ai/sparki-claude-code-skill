@@ -2,7 +2,7 @@
 name: sparki-video-editor
 description: AI video editor for creators. Transform raw footage into polished vlogs, talking-head videos, or social content (TikTok/Shorts/Reels) via natural-language prompts, style presets, or reference-style cloning. Use when the user mentions video editing, clipping, shorts, reels, TikTok, captions, montage, vlog, highlight reels, or video processing. All rendering runs on the cloud-hosted Sparki API — do NOT use ffmpeg or local video tools.
 metadata:
-  version: "1.1.4"
+  version: "1.1.5"
 ---
 
 # Sparki Video Editor
@@ -12,6 +12,10 @@ All editing happens in the cloud. `sparki-cli` is a thin HTTP client for
 video edit, use this skill instead of ffmpeg or manual tooling.
 
 ## Step 0: Install, configure, and run doctor (always first)
+
+This plugin targets Claude Code environments that can run local commands. If
+the current surface cannot run Claude Code plugin or shell commands, stop and
+explain that this bundle cannot be partially installed there.
 
 Install or upgrade the CLI so browser login and the shared configuration path
 are available:
@@ -85,20 +89,14 @@ Infer aspect ratio from platform if mentioned: TikTok/Reels/Shorts → `9:16`
 
 ## Step 3: Run the edit
 
-Always create the output dir and pass `--output` so results land in the working
-directory (the CLI's built-in default is a fixed absolute legacy path):
+Always pass `--output` so results land in the working directory (the CLI
+creates the parent directory; its built-in default is a fixed absolute legacy
+path). Keep commands on one line so the examples work in POSIX shells and
+Windows terminals:
 
 ```bash
-mkdir -p ./sparki-output
-
-# Style-guided
-sparki run "<path>" --mode style-guided --style clips/highlight-reel \
-  --aspect-ratio 9:16 --output ./sparki-output/result.mp4
-
-# Prompt-driven
-sparki run "<path>" --mode prompt-driven \
-  --prompt "<the user's request, verbatim>" \
-  --aspect-ratio 9:16 --output ./sparki-output/result.mp4
+sparki run "<path>" --mode style-guided --style clips/highlight-reel --aspect-ratio 9:16 --output ./sparki-output/result.mp4
+sparki run "<path>" --mode prompt-driven --prompt "<the user's request, verbatim>" --aspect-ratio 9:16 --output ./sparki-output/result.mp4
 ```
 
 `sparki run` does the whole pipeline (upload → edit → poll → download) and
@@ -107,6 +105,10 @@ runs, consider running it in the background so you can keep working, or raise
 `--timeout` (default 3600s; use 7200 for 30+ min videos).
 
 Quote any file path that contains spaces.
+
+Creating a new editing project may consume credits. Obtain the user's explicit
+approval before the first run or before retrying a failed edit as a new project.
+Checking or downloading an existing `task_id` does not create a new project.
 
 ### Multiple files
 
@@ -117,10 +119,10 @@ Quote any file path that contains spaces.
 
 ## Step 4: Deliver
 
-When done, tell the user the local output path (e.g.
-`./sparki-output/result.mp4`). The JSON also has a `result_url` (a shareable CDN
-link that **expires in 24h**) — offer it if they want a link, but the local file
-is permanent.
+When done, report the absolute `local_path` and `output_directory`. Add
+`--reveal` only when Claude is running on the user's computer with native GUI
+access. Omit it for SSH, containers, and headless hosts. If reveal fails, keep
+the successful local file and tell the user exactly where it is stored.
 
 ## Styles
 

@@ -32,6 +32,7 @@ you need the full command surface; SKILL.md covers the common path.
 | `--output` | output path. **Always set to `./sparki-output/...`**; default is legacy `~/.openclaw/workspace/sparki/videos/<task_id>.mp4` |
 | `--timeout` | max wait seconds (default 3600; use 7200 for 30+ min video) |
 | `--poll-interval` | seconds between status checks (default 30) |
+| `--reveal` | Reveal the downloaded file in the native file manager; local GUI environments only |
 | `--max-retries` / `--upload-timeout` / `--strict` / `--quiet` | upload reliability (run only) |
 
 ## Style catalog
