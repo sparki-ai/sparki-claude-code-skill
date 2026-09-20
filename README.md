@@ -22,16 +22,19 @@ Copy the `sparki-video-editor/` directory into your Claude Code skills folder:
 - Personal (all projects): `~/.claude/skills/`
 - Project-scoped (checked in for your team): `.claude/skills/`
 
-Then install the engine and configure your key:
+Then install the engine and check whether it is already configured:
 
 ```bash
 bash sparki-video-editor/scripts/install.sh
-sparki setup --api-key <YOUR_KEY> --channel claude  # get a key at https://sparki.io/claude-code-skill
+sparki config-status --channel claude
+sparki login --channel claude  # only when configured is false
 sparki doctor --channel claude
 ```
 
-(Or set both `SPARKI_API_KEY` and `SPARKI_CHANNEL=claude` in your environment
-instead of running `sparki setup`.)
+Browser login reuses the existing Sparki email-code, Google, and Apple sign-in
+flows, then shows an explicit approval prompt. No authorization code or API key
+needs to be entered, printed, or pasted into Claude. Managed environments may
+instead set both `SPARKI_API_KEY` and `SPARKI_CHANNEL=claude`.
 
 ## Usage
 
@@ -48,14 +51,15 @@ Claude runs `sparki doctor --channel claude`, confirms your editing intent, then
 ## Requirements
 
 - [`uv`](https://docs.astral.sh/uv/) on PATH
-- A Sparki API key from https://sparki.io/claude-code-skill
+- A Sparki account; first-time setup opens https://sparki.io for approval
 
 ## Notes
 
 - Formats: mp4/mov, max 3GB. Processing typically 5–20 min.
-- Config lives at `~/.openclaw/config/sparki.json` (legacy dir name — does NOT
-  require OpenClaw). Output defaults there too, so the skill always passes
-  `--output ./sparki-output/...`.
+- Config lives at `Path.home()/.sparki/config/config.json` on macOS, Linux, and
+  Windows. The CLI still reads the old OpenClaw config as a fallback. Output
+  keeps its legacy default, so the skill always passes `--output
+  ./sparki-output/...`.
 
 ## License
 

@@ -2,7 +2,7 @@
 name: sparki-video-editor
 description: AI video editor for creators. Transform raw footage into polished vlogs, talking-head videos, or social content (TikTok/Shorts/Reels) via natural-language prompts, style presets, or reference-style cloning. Use when the user mentions video editing, clipping, shorts, reels, TikTok, captions, montage, vlog, highlight reels, or video processing. All rendering runs on the cloud-hosted Sparki API — do NOT use ffmpeg or local video tools.
 metadata:
-  version: "1.1.3"
+  version: "1.1.4"
 ---
 
 # Sparki Video Editor
@@ -11,54 +11,65 @@ All editing happens in the cloud. `sparki-cli` is a thin HTTP client for
 `agent-api.sparki.io`; nothing renders locally. When the user wants any kind of
 video edit, use this skill instead of ffmpeg or manual tooling.
 
-## Step 0: Doctor + version check (always first)
+## Step 0: Install, configure, and run doctor (always first)
 
-Before running doctor, make sure the installed CLI understands the channel
-option. This capability check upgrades both missing installations and legacy
-CLI versions that would otherwise reject `--channel` before doctor can report
-that they are outdated:
+Install or upgrade the CLI so browser login and the shared configuration path
+are available:
 
 ```bash
-if ! command -v sparki >/dev/null 2>&1 || \
-   ! sparki doctor --help 2>&1 | grep -q -- '--channel'; then
-  uv tool install --upgrade sparki-cli
-fi
+uv tool install --upgrade sparki-cli
+sparki config-status --channel claude
+```
 
+If `sparki` is not yet on `PATH` after installation, use `uv tool run --from
+sparki-cli sparki` in place of the leading `sparki` for the current session.
+
+`uv` is required. If it is missing, use a trusted package manager already
+available on the operating system (`brew install uv` on macOS, `winget install
+--id=astral-sh.uv -e` on Windows, or `pipx install uv` where available).
+Otherwise direct the user to the official installation guide at
+https://docs.astral.sh/uv/getting-started/installation/. Do not silently run a
+remote installer script.
+
+If `config-status` reports `configured: false`, go to Step 1. If it reports
+`configured: true`, do not request or replace an API key; run:
+
+```bash
 sparki doctor --channel claude
 ```
 
-(Requires `uv`. If missing: `brew install uv` or
-`curl -LsSf https://astral.sh/uv/install.sh | sh`.)
-
-Doctor checks the CLI install, API key, base URL, config directory, and the
-skill version when the installed skill can be discovered.
-
-If doctor reports `api_key` missing, go to Step 1. If doctor reports a
-transient network error, simply re-run it once — the CLI retries cold
-connections, but a first run can still occasionally need a second attempt.
+Doctor checks the CLI install, API key, base URL, config directory, and skill
+version. If it reports a transient network error, simply re-run it once.
 If `skill_version` is `skip`, continue with this loaded SKILL.md; discovery is
 advisory and must not block editing. If doctor reports a concrete version that
 differs from this file's `version`, reload the installed skill before running
 editing commands.
 
-## Step 1: First-time setup (only if api_key is missing)
+## Step 1: First-time browser login (only if config is missing)
 
-The API key must come from the user — never invent or guess one. Tell them:
-
-> "You need a Sparki API key. Get one at https://sparki.io/claude-code-skill (click the
-> **Get API Key** button), then paste it here. Or set `SPARKI_API_KEY` and
-> `SPARKI_CHANNEL=claude` in your environment and I'll pick them up automatically."
-
-Once they provide it:
+Never ask the user to paste an API key into chat or expose it in command-line
+arguments. Start one browser authorization:
 
 ```bash
-sparki setup --api-key <KEY> --channel claude
+sparki login --channel claude
 sparki doctor --channel claude
 ```
 
-Prefer both environment variables when the user is privacy-conscious — they
-keep the key out of the saved config file and preserve Claude-specific recovery
-guidance without putting the key in chat.
+The CLI opens `sparki.io`, where the user can sign in with the existing email
+code, Google, or Apple flow. After login, Sparki shows a confirmation prompt;
+the user explicitly approves Claude there. The CLI then receives the account
+API key directly and saves it to the cross-platform user-home path
+`~/.sparki/config/config.json` under `SPARKI_API_KEY`; the key is never printed.
+If the current environment is known to be headless, start with `sparki login
+--channel claude --no-browser`. If an ordinary login cannot open the browser,
+the running command prints the complete one-time URL; show that same URL and let
+the same command keep polling. Never ask the user to enter, copy, or paste an
+authorization code. Do not create a second authorization request merely because
+browser opening failed.
+
+The `SPARKI_API_KEY` environment variable still takes precedence for managed
+environments. Set `SPARKI_CHANNEL=claude` alongside it for channel-specific
+recovery guidance.
 
 ## Step 2: Get the video + editing intent
 
@@ -126,8 +137,8 @@ command reference, style descriptions, status lifecycle, and error codes.
 ## Error handling
 
 All commands return JSON: `{"ok": false, "error": {"code", "message", "action"}}`.
-Follow the `action` field. Common: `AUTH_FAILED` (bad key → re-get at
-sparki.io/claude-code-skill), `QUOTA_EXCEEDED` (top up at sparki.io), `INVALID_STYLE`
+Follow the `action` field. Common: `AUTH_FAILED` (bad key → run `sparki login
+--channel claude --force`), `QUOTA_EXCEEDED` (top up at sparki.io), `INVALID_STYLE`
 (show style list), `RENDER_TIMEOUT` (shorter clip or higher `--timeout`),
 `STORAGE_FULL` (`sparki assets delete ...`). Full table in
 `references/commands.md`.

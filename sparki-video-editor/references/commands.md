@@ -7,8 +7,9 @@ you need the full command surface; SKILL.md covers the common path.
 
 | Command | Purpose |
 |---|---|
+| `sparki config-status --channel claude` | Check whether the canonical config file exists without reading or printing its key. |
+| `sparki login --channel claude` | Open browser login, show an approval prompt after sign-in, and save the account key without displaying it. Use `--no-browser` for headless terminals and `--force` to replace an existing config. |
 | `sparki doctor --channel claude` | Self-check: CLI version, API key, base URL, config dir. `--json` / `--fix`. |
-| `sparki setup --api-key <KEY> --channel claude` | Save and validate the key while persisting the Claude channel. `--base-url` overrides the endpoint. |
 | `sparki upload <files...>` | Upload assets; returns object keys. `--dir`, `--max-retries`, `--upload-timeout`, `--quiet`. |
 | `sparki run <files...>` | End-to-end: upload → edit → poll → download. |
 | `sparki edit <object_keys...>` | Create a project from already-uploaded assets. |
@@ -56,10 +57,10 @@ Style-clone (shorter): `INIT → EXECUTOR → COMPLETED / FAILED / CANCEL`
 
 ## Config & paths (Claude Code)
 
-- Config: `~/.openclaw/config/sparki.json` (legacy dir name, hardcoded; does NOT
-  require OpenClaw installed). API key also read from `SPARKI_API_KEY` (takes
-  precedence); set `SPARKI_CHANNEL=claude` alongside it to preserve
-  channel-specific recovery guidance.
+- Config: `Path.home()/.sparki/config/config.json` on macOS, Linux, and Windows.
+  The stored field is `SPARKI_API_KEY`. The environment variable with the same
+  name takes precedence; set `SPARKI_CHANNEL=claude` alongside it to preserve
+  channel-specific recovery guidance. Older OpenClaw config is read-only fallback.
 - Base URL: `https://agent-api.sparki.io`.
 - Always pass `--output ./sparki-output/...` so results stay in the workspace.
 
@@ -67,7 +68,7 @@ Style-clone (shorter): `INIT → EXECUTOR → COMPLETED / FAILED / CANCEL`
 
 | Code | Action |
 |---|---|
-| `AUTH_FAILED` | Invalid key → get a new one at https://sparki.io/claude-code-skill, `sparki setup --api-key <key> --channel claude` |
+| `AUTH_FAILED` | Invalid key → `sparki login --channel claude --force`, approve in the browser, then rerun doctor |
 | `QUOTA_EXCEEDED` | Out of credits → top up at https://sparki.io/ |
 | `STORAGE_FULL` | `sparki assets list` then `sparki assets delete ...`, retry |
 | `FILE_TOO_LARGE` | File > 3GB → compress/trim |
