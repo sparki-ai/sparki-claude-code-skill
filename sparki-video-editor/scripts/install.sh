@@ -20,7 +20,5 @@ else
 fi
 "${sparki_command[@]}" --help >/dev/null
 echo
-echo "sparki-cli installed. Check configuration before starting browser login:"
-printf '  %s config-status --channel claude\n' "${sparki_command[*]}"
-printf '  %s login --channel claude       # only when configured is false\n' "${sparki_command[*]}"
-printf '  %s doctor --channel claude\n' "${sparki_command[*]}"
+echo "sparki-cli installed. Connect and verify the account with:"
+printf '  %s connect --channel claude --timeout 540\n' "${sparki_command[*]}"
