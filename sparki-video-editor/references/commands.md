@@ -7,8 +7,9 @@ you need the full command surface; SKILL.md covers the common path.
 
 | Command | Purpose |
 |---|---|
+| `sparki connect --channel claude --timeout 540` | Reuse or create browser authorization, save the approved key without displaying it, and run doctor. Add `--no-browser` for headless terminals or `--force` for a rejected credential. |
 | `sparki config-status --channel claude` | Check whether the canonical config file exists without reading or printing its key. |
-| `sparki login --channel claude` | Open browser login, show an approval prompt after sign-in, and save the account key without displaying it. Use `--no-browser` for headless terminals and `--force` to replace an existing config. |
+| `sparki login --channel claude` | Run browser authorization only. Kept for diagnostics and backward compatibility. |
 | `sparki doctor --channel claude` | Self-check: CLI version, API key, base URL, config dir. `--json` / `--fix`. |
 | `sparki upload <files...>` | Upload assets; returns object keys. `--dir`, `--max-retries`, `--upload-timeout`, `--quiet`. |
 | `sparki run <files...>` | End-to-end: upload → edit → poll → download. |
@@ -69,7 +70,7 @@ Style-clone (shorter): `INIT → EXECUTOR → COMPLETED / FAILED / CANCEL`
 
 | Code | Action |
 |---|---|
-| `AUTH_FAILED` | Invalid key → `sparki login --channel claude --force`, approve in the browser, then rerun doctor |
+| `AUTH_FAILED` | Invalid key → `sparki connect --channel claude --force --timeout 540` |
 | `QUOTA_EXCEEDED` | Out of credits → top up at https://sparki.io/ |
 | `STORAGE_FULL` | `sparki assets list` then `sparki assets delete ...`, retry |
 | `FILE_TOO_LARGE` | File > 3GB → compress/trim |

@@ -43,15 +43,18 @@ configured when first used:
 
 ```bash
 bash sparki-video-editor/scripts/install.sh
-sparki config-status --channel claude
-sparki login --channel claude  # only when configured is false
-sparki doctor --channel claude
+sparki connect --channel claude --timeout 540
 ```
 
 Browser login reuses the existing Sparki email-code, Google, and Apple sign-in
 flows, then shows an explicit approval prompt. No authorization code or API key
 needs to be entered, printed, or pasted into Claude. Managed environments may
 instead set both `SPARKI_API_KEY` and `SPARKI_CHANNEL=claude`.
+
+Claude should keep `connect` in the foreground. It reuses an existing
+credential or waits for browser approval when needed, then runs doctor before
+returning. The user does not need to return to chat and say that approval is
+complete.
 
 ## Usage
 
@@ -62,8 +65,8 @@ Just ask Claude to edit a video — the skill triggers on mentions of vlog / cli
 > Edit ./raw/trip.mp4 into a vertical travel highlight reel
 ```
 
-Claude runs `sparki doctor --channel claude`, confirms your editing intent, then
-`sparki run ... --output ./sparki-output/result.mp4`.
+Claude runs `sparki connect --channel claude --timeout 540`, confirms your
+editing intent, then `sparki run ... --output ./sparki-output/result.mp4`.
 
 ## Requirements
 

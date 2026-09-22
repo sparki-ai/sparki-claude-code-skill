@@ -12,7 +12,7 @@
 - 仓库：**https://github.com/fischerlam/sparki-claude-code-skill**（PUBLIC）
 - 分支：`main` · 提交前以远端最新 commit 为准
 - `claude plugin validate` → ✔ 通过（审核流水线跑的是同一个校验）
-- plugin.json version `1.1.4`，与 SKILL.md 一致（版本不一致是最常见的拒绝原因，已避开）
+- plugin.json version `1.1.6`，与 SKILL.md 一致（版本不一致是最常见的拒绝原因，已避开）
 
 > ⚠️ 提交前若又推了新 commit，审核会 pin 到最新 SHA；确保推之后再校验一次。
 
@@ -66,9 +66,8 @@ rendering. First-time setup connects an existing Sparki account in the browser.
 ### 7. Setup / prerequisites（如有此栏）
 ```
 1. Install the engine: uv tool install --upgrade sparki-cli  (requires uv)
-2. Run `sparki config-status --channel claude`.
-3. If not configured, run `sparki login --channel claude` and approve in the browser.
-4. Run `sparki doctor --channel claude` to confirm setup.
+2. Run `sparki connect --channel claude --timeout 540`.
+3. If prompted, sign in and approve access in the browser.
 ```
 
 ### 8. Author / Publisher identity
